@@ -66,6 +66,7 @@ function RouteComponent() {
             variant="ghost"
             size="sm"
             onClick={e => {
+              e.preventDefault();
               e.stopPropagation();
               copyToClipboard(
                 `https://${
