@@ -4,6 +4,7 @@ import {
   createLinkSchema,
   destinationsSchema,
 } from "@repo/data-ops/zod-schema/links";
+import { createLink } from "@repo/data-ops/queries/links";
 
 import { TRPCError } from "@trpc/server";
 import {
@@ -17,20 +18,27 @@ export const linksTrpcRoutes = t.router({
     .input(
       z.object({
         offset: z.number().optional(),
-      }),
+      })
     )
     .query(async ({}) => {
       return LINK_LIST;
     }),
-  createLink: t.procedure.input(createLinkSchema).mutation(async ({}) => {
-    return "random-id";
-  }),
+  createLink: t.procedure
+    .input(createLinkSchema)
+    .mutation(async ({ input, ctx }) => {
+      const linkId = await createLink({
+        accountId: ctx.userInfo.userId,
+        ...input,
+      });
+
+      return linkId;
+    }),
   updateLinkName: t.procedure
     .input(
       z.object({
         linkId: z.string(),
         name: z.string().min(1).max(300),
-      }),
+      })
     )
     .mutation(async ({ input }) => {
       console.log(input.linkId, input.name);
@@ -39,7 +47,7 @@ export const linksTrpcRoutes = t.router({
     .input(
       z.object({
         linkId: z.string(),
-      }),
+      })
     )
     .query(async ({}) => {
       const data = {
@@ -62,7 +70,7 @@ export const linksTrpcRoutes = t.router({
       z.object({
         linkId: z.string(),
         destinations: destinationsSchema,
-      }),
+      })
     )
     .mutation(async ({ input }) => {
       console.log(input.linkId, input.destinations);

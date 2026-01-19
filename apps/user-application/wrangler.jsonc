@@ -9,9 +9,16 @@
   "compatibility_date": "2025-06-17",
   "assets": {
     "binding": "ASSETS",
-    "not_found_handling": "single-page-application",
+    "not_found_handling": "single-page-application"
   },
   "observability": {
-    "enabled": true,
+    "enabled": true
   },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_id": "a8572314-f04a-45a8-b03f-b645afa95630",
+      "remote": true
+    }
+  ]
 }
