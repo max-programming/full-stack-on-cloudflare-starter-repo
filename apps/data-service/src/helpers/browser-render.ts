@@ -12,7 +12,10 @@ export async function collectDestinationInfo(env: Env, destinationUrl: string) {
 	const html = await page.content();
 	const status = response ? response.status() : 0;
 
+	const screenshot = await page.screenshot({ encoding: 'base64' });
+	const screenshotDataUrl = `data:image/png;base64,${screenshot}`;
+
 	await browser.close();
 
-	return { bodyText, html, status };
+	return { bodyText, html, status, screenshotDataUrl };
 }
