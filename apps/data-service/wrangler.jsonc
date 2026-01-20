@@ -50,5 +50,8 @@
 			"name": "destination-evaluation-workflow",
 			"class_name": "DestinationEvaluationWorkflow"
 		}
-	]
+	],
+	"browser": {
+		"binding": "VIRTUAL_BROWSER"
+	}
 }
