@@ -43,5 +43,12 @@
 				"remote": true
 			}
 		]
-	}
+	},
+	"workflows": [
+		{
+			"binding": "DESTINATION_EVALUATION_WORKFLOW",
+			"name": "destination-evaluation-workflow",
+			"class_name": "DestinationEvaluationWorkflow"
+		}
+	]
 }
