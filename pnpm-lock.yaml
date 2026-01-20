@@ -21,7 +21,7 @@ importers:
         specifier: workspace:*
         version: link:../../packages/data-ops
       ai:
-        specifier: ^5.0.68
+        specifier: ^5.0.110
         version: 5.0.110(zod@3.25.67)
       hono:
         specifier: ^4.8.3
