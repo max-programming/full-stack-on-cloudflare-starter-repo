@@ -63,5 +63,19 @@
 			"bucket_name": "smart-links-eval-stage",
 			"remote": true
 		}
+	],
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "EVALUATION_SCHEDULER",
+				"class_name": "EvaluationScheduler"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_classes": ["EvaluationScheduler"]
+		}
 	]
 }
