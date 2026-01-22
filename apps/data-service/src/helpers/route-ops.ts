@@ -1,6 +1,7 @@
 import { getLink } from '@repo/data-ops/queries/links';
 import { linkSchema, type LinkSchemaType } from '@repo/data-ops/zod-schema/links';
 import type { LinkClickMessageType } from '@repo/data-ops/zod-schema/queue';
+import moment from 'moment';
 
 const TTL_TIME = 60 * 60 * 24;
 
@@ -55,4 +56,17 @@ export async function scheduleEvalWorkflow(env: Env, linkInfo: LinkClickMessageT
 	const stub = env.EVALUATION_SCHEDULER.get(doId);
 
 	await stub.collectLinkClick(linkInfo.data.accountId, linkInfo.data.id, linkInfo.data.destination, linkInfo.data.country || 'UNKNOWN');
+}
+
+export async function captureLinkClickInBackground(env: Env, event: LinkClickMessageType) {
+	await env.QUEUE.send(event);
+
+	const doId = env.LINK_CLICK_TRACKER.idFromName(event.data.accountId);
+	const stub = env.LINK_CLICK_TRACKER.get(doId);
+
+	if (!event.data.latitude || !event.data.longitude || !event.data.country) {
+		return;
+	}
+
+	await stub.addLinkClick(event.data.latitude, event.data.longitude, event.data.country, moment().valueOf());
 }
